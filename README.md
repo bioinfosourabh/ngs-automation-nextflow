@@ -31,5 +31,28 @@ output/
 └── logs/                    # Log files for each Nextflow process
 ```
 
+## Pipeline Steps
+| Step  | Tool  | Description   |
+|----------|----------|----------|
+| Directory setup	  | bash  | 	Initializes output folders   |
+| Quality filtering	  | fastp  | 	Adapter trimming and QC   |
+| Alignment	  | BWA-MEM  | 	Aligns reads to reference   |
+| Duplicate marking  | GATK MarkDuplicatesSpark  | 	Marks PCR duplicates   |
+| Base recalibration  | GATK BaseRecalibrator  | 	Uses known SNPs for BQSR   |
+| Apply recalibration	  | GATK ApplyBQSR  | 	Applies BQSR table to BAM   |
+| Variant calling  | GATK HaplotypeCaller  | 	GVCF mode per sample   |
+| Joint genotyping  | GATK GenotypeGVCFs  | 	Combines GVCFs into VCF   |
+
+
+
+
+
+
+
+
+
+
+
+
 
   
