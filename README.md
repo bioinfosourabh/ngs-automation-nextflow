@@ -88,11 +88,11 @@ params.platform     = "ILLUMINA"
 
 // Define input parameters
 params.inputDir = "$baseDir"      // Assuming input directory is the directory from which the pipeline is launched
-params.file_ref = "/media/prabudh/m1/hg38/hg38.fa"
-params.known_site = "/media/prabudh/m1/vcf_file/dbsnp.vcf.gz"
+params.file_ref = "/path/to/hg38.fa"
+params.known_site = "/path/to/dbsnp.vcf.gz"
 params.platform = "ILLUMINA"
-params.pon = "/media/prabudh/m1/vcf_file/somatic-hg38_1000g_pon.hg38.vcf"
-params.af_only = "/media/prabudh/m1/vcf_file/somatic-hg38_af-only-gnomad.hg38.vcf"
+params.pon = "/path/to/somatic-hg38_1000g_pon.hg38.vcf"
+params.af_only = "/path/to/somatic-hg38_af-only-gnomad.hg38.vcf"
 
 // Output directories
 outputDir = file("$params.inputDir/output")
