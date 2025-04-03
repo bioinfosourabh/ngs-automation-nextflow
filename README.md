@@ -21,13 +21,14 @@ To run the pipeline, you will need:
 
 Output Structure
 The pipeline generates the following output directories:
+```
 output/
 ├── fastqc/                  # Raw QC reports
 ├── filtered_qc_report/      # Trimmed/filtered FASTQs (via fastp)
 ├── Mapsam/                  # Aligned and sorted BAM files
 ├── Germline_VCF/            # GVCF and raw VCF files
 └── logs/                    # Log files for each Nextflow process
-
+```
 
 
   
