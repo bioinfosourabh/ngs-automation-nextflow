@@ -82,7 +82,7 @@ params.af_only      = "/path/to/gnomad.af.vcf.gz"
 params.platform     = "ILLUMINA"
 ```
 
-## Whole Pipeline
+## Whole Nextflow Pipeline
 ```
 #!/usr/bin/env nextflow
 
