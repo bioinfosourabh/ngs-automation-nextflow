@@ -43,16 +43,44 @@ output/
 | Variant calling  | GATK HaplotypeCaller  | 	GVCF mode per sample   |
 | Joint genotyping  | GATK GenotypeGVCFs  | 	Combines GVCFs into VCF   |
 
+## Nextflow Workflow
+The Nextflow script defines the following structure:
+```
+workflow {
+    setupDirectories()
+    fastp()
+    bwa_mem()
+    mark_duplicates()
+    base_recalibrator()
+    apply_bqsr()
+    haplotype_caller()
+    genotype_gvcfs()
+}
+```
+Each process block (e.g., fastp, bwa_mem, mark_duplicates, etc.) is defined in the .nf script and configured with inputs, outputs, and commands for execution. Channels are used to handle paired-end files and pass them between processes.
+
+## Running the Pipeline
+Make sure you have Nextflow installed and properly configured.
+Run the pipeline with:
+```
+nextflow run germline_variant_calling.nf -with-trace -with-report -resume
+```
+Add optional flags as needed:
+-with-dag dag.png to visualize the pipeline structure
+-with-timeline timeline.html to assess performance
+-profile docker for containerized execution (if implemented)
 
 
+## Parameter Configuration
+Inside the germline_variant_calling.nf script, edit the params block to match your file paths:
+```
+params.inputDir     = "$baseDir"
+params.file_ref     = "/path/to/hg38.fa"
+params.known_site   = "/path/to/dbsnp.vcf.gz"
+params.pon          = "/path/to/pon.vcf.gz"
+params.af_only      = "/path/to/gnomad.af.vcf.gz"
+params.platform     = "ILLUMINA"
+```
 
-
-
-
-
-
-
-
-
-
-  
+## Contact
+Sourabh Kumar ( Email: bioinfosourabh@gmail.com  )
