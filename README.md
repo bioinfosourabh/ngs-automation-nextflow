@@ -11,7 +11,7 @@ The pipeline supports parallel execution, reproducibility, and easy scaling acro
 - Supports per-sample GVCF generation and joint genotyping
 - Produces structured outputs and summary logs
 
-Input Requirements
+## Input Requirements
 To run the pipeline, you will need:
 - Paired-end FASTQ files (*_1.fastq.gz and *_2.fastq.gz)
 - Reference genome FASTA file (hg38.fa) and index files
@@ -19,7 +19,7 @@ To run the pipeline, you will need:
 - gnomAD allele frequency VCF
 - Panel of Normals (PoN) for filtering technical artifacts
 
-Output Structure
+## Output Structure
 The pipeline generates the following output directories:
 ```
 output/
