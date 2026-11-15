@@ -57,7 +57,7 @@ flowchart TD
        --input samplesheet.csv \
        --outdir results \
        --fasta Homo_sapiens_assembly38.fasta \
-       --dbsnp Homo_sapiens_assembly38.dbsnp138.vcf.gz \
+       --dbsnp Homo_sapiens_assembly38.dbsnp138.vcf \
        --known_indels Mills_and_1000G_gold_standard.indels.hg38.vcf.gz,Homo_sapiens_assembly38.known_indels.vcf.gz \
        --germline_resource af-only-gnomad.hg38.vcf.gz \
        --pon 1000g_pon.hg38.vcf.gz \

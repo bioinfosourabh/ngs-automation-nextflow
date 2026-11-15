@@ -30,14 +30,14 @@ For GRCh38, the GATK resource bundle provides everything needed:
 |---|---|
 | `--fasta` | `Homo_sapiens_assembly38.fasta` (with `.fai` and `.dict`, or let the pipeline build them) |
 | `--bwa_index` | directory with a pre-built index; building a BWA-MEM2 index for GRCh38 needs about 64 GB of memory |
-| `--dbsnp` | `Homo_sapiens_assembly38.dbsnp138.vcf.gz` |
+| `--dbsnp` | `Homo_sapiens_assembly38.dbsnp138.vcf` (with `.vcf.idx`) |
 | `--known_indels` | `Mills_and_1000G_gold_standard.indels.hg38.vcf.gz,Homo_sapiens_assembly38.known_indels.vcf.gz` |
 | `--germline_resource` | `af-only-gnomad.hg38.vcf.gz` |
 | `--pon` | `1000g_pon.hg38.vcf.gz`, or a panel of normals built from your own normals with the same assay |
 | `--contamination_variants` | `small_exac_common_3.hg38.vcf.gz` |
 | `--vqsr_hapmap`, `--vqsr_omni`, `--vqsr_1000g`, `--vqsr_mills`, `--vqsr_axiom` | `hapmap_3.3.hg38.vcf.gz`, `1000G_omni2.5.hg38.vcf.gz`, `1000G_phase1.snps.high_confidence.hg38.vcf.gz`, `Mills_and_1000G_gold_standard.indels.hg38.vcf.gz`, `Axiom_Exome_Plus.genotypes.all_populations.poly.hg38.vcf.gz` |
 
-All VCFs must be bgzipped and have a `.tbi` index next to them.
+VCFs must have an index next to them: `.tbi` for bgzipped files, or a Tribble `.idx` for plain `.vcf` files (as shipped in the GATK bundle for dbSNP).
 
 ## Exome and panel data
 

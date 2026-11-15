@@ -16,9 +16,14 @@ include { MOSDEPTH                      } from '../modules/local/mosdepth'
 include { ENSEMBLVEP_VEP                } from '../modules/local/ensemblvep/vep'
 include { MULTIQC                       } from '../modules/local/multiqc'
 
-// Optional single-file input with its tabix index; [] when not given.
+// Optional VCF with its index ([] when not given): bgzipped VCF with .tbi,
+// or uncompressed VCF with a Tribble .idx (as in the GATK resource bundle).
 def optionalVcf(path) {
-    return path ? [file(path, checkIfExists: true), file("${path}.tbi", checkIfExists: true)] : [[], []]
+    if (!path) {
+        return [[], []]
+    }
+    def index = path.toString().endsWith('.gz') ? "${path}.tbi" : "${path}.idx"
+    return [file(path, checkIfExists: true), file(index, checkIfExists: true)]
 }
 
 workflow NGS_VARIANTS {

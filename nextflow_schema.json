@@ -100,9 +100,9 @@
                 },
                 "dbsnp": {
                     "type": "string",
-                    "description": "dbSNP VCF (bgzipped, with .tbi) used as BQSR known sites and to annotate germline calls.",
+                    "description": "dbSNP VCF (bgzipped with .tbi, or plain VCF with .idx) used as BQSR known sites and to annotate germline calls.",
                     "format": "file-path",
-                    "pattern": "^\\S+\\.vcf\\.gz$"
+                    "pattern": "^\\S+\\.vcf(\\.gz)?$"
                 },
                 "known_indels": {
                     "type": "string",
@@ -141,31 +141,31 @@
                     "type": "string",
                     "description": "HapMap 3.3 sites VCF (VQSR SNP truth/training).",
                     "format": "file-path",
-                    "pattern": "^\\S+\\.vcf\\.gz$"
+                    "pattern": "^\\S+\\.vcf(\\.gz)?$"
                 },
                 "vqsr_omni": {
                     "type": "string",
                     "description": "1000G Omni 2.5 sites VCF (VQSR SNP truth/training).",
                     "format": "file-path",
-                    "pattern": "^\\S+\\.vcf\\.gz$"
+                    "pattern": "^\\S+\\.vcf(\\.gz)?$"
                 },
                 "vqsr_1000g": {
                     "type": "string",
                     "description": "1000G phase 1 high-confidence SNPs VCF (VQSR SNP training).",
                     "format": "file-path",
-                    "pattern": "^\\S+\\.vcf\\.gz$"
+                    "pattern": "^\\S+\\.vcf(\\.gz)?$"
                 },
                 "vqsr_mills": {
                     "type": "string",
                     "description": "Mills and 1000G gold standard indels VCF (VQSR indel truth/training).",
                     "format": "file-path",
-                    "pattern": "^\\S+\\.vcf\\.gz$"
+                    "pattern": "^\\S+\\.vcf(\\.gz)?$"
                 },
                 "vqsr_axiom": {
                     "type": "string",
                     "description": "Optional Axiom Exome Plus polymorphic sites VCF (VQSR indel training).",
                     "format": "file-path",
-                    "pattern": "^\\S+\\.vcf\\.gz$"
+                    "pattern": "^\\S+\\.vcf(\\.gz)?$"
                 },
                 "vqsr_snp_filter_level": {
                     "type": "number",
@@ -197,19 +197,19 @@
                     "type": "string",
                     "description": "Population allele-frequency VCF for Mutect2 (e.g. af-only-gnomad.hg38.vcf.gz).",
                     "format": "file-path",
-                    "pattern": "^\\S+\\.vcf\\.gz$"
+                    "pattern": "^\\S+\\.vcf(\\.gz)?$"
                 },
                 "pon": {
                     "type": "string",
                     "description": "Panel of normals VCF for Mutect2 (e.g. 1000g_pon.hg38.vcf.gz).",
                     "format": "file-path",
-                    "pattern": "^\\S+\\.vcf\\.gz$"
+                    "pattern": "^\\S+\\.vcf(\\.gz)?$"
                 },
                 "contamination_variants": {
                     "type": "string",
                     "description": "Common biallelic SNPs for GetPileupSummaries (e.g. small_exac_common_3.hg38.vcf.gz). Contamination is not estimated when unset.",
                     "format": "file-path",
-                    "pattern": "^\\S+\\.vcf\\.gz$"
+                    "pattern": "^\\S+\\.vcf(\\.gz)?$"
                 }
             }
         },
