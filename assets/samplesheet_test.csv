@@ -1,0 +1,6 @@
+patient,sample,status,lane,fastq_1,fastq_2
+P1,NORMAL1,0,L001,../tests/data/fastq/NORMAL1_L001_R1.fastq.gz,../tests/data/fastq/NORMAL1_L001_R2.fastq.gz
+P1,NORMAL1,0,L002,../tests/data/fastq/NORMAL1_L002_R1.fastq.gz,../tests/data/fastq/NORMAL1_L002_R2.fastq.gz
+P1,TUMOUR1,1,L001,../tests/data/fastq/TUMOUR1_L001_R1.fastq.gz,../tests/data/fastq/TUMOUR1_L001_R2.fastq.gz
+P2,NORMAL2,0,L001,../tests/data/fastq/NORMAL2_L001_R1.fastq.gz,../tests/data/fastq/NORMAL2_L001_R2.fastq.gz
+P3,TUMOUR3,1,L001,../tests/data/fastq/TUMOUR3_L001_R1.fastq.gz,../tests/data/fastq/TUMOUR3_L001_R2.fastq.gz

@@ -1,0 +1,6 @@
+# Whole-genome mode (no target BED), no panel of normals, no contamination
+# estimation, somatic calling only.
+intervals: null
+pon: null
+contamination_variants: null
+run_germline: false

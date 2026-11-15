@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this pipeline, please cite it as below, together with the tools it runs (see README)."
+title: "ngs-automation-nextflow: germline and somatic short-variant calling with GATK4 in Nextflow"
+type: software
+authors:
+  - family-names: Kumar
+    given-names: Sourabh
+    email: bioinfosourabh@gmail.com
+    orcid: "https://orcid.org/0009-0009-5840-9830"
+repository-code: "https://github.com/bioinfosourabh/ngs-automation-nextflow"
+license: MIT
+version: 1.0.0
+date-released: 2026-11-15
+keywords:
+  - nextflow
+  - variant calling
+  - GATK
+  - Mutect2
+  - joint genotyping

@@ -1,0 +1,331 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/bioinfosourabh/ngs-automation-nextflow/main/nextflow_schema.json",
+    "title": "ngs-automation-nextflow pipeline parameters",
+    "description": "Germline and somatic short-variant calling from paired-end FASTQ with GATK4",
+    "type": "object",
+    "$defs": {
+        "input_output_options": {
+            "title": "Input/output options",
+            "type": "object",
+            "required": [
+                "input",
+                "outdir"
+            ],
+            "properties": {
+                "input": {
+                    "type": "string",
+                    "description": "Samplesheet CSV with columns patient, sample, status, lane, fastq_1, fastq_2.",
+                    "format": "file-path",
+                    "pattern": "^\\S+\\.csv$",
+                    "help_text": "See docs/usage.md. Relative FASTQ paths are resolved against the samplesheet's directory."
+                },
+                "outdir": {
+                    "type": "string",
+                    "description": "Output directory (local path or s3:// URI).",
+                    "format": "directory-path"
+                },
+                "publish_dir_mode": {
+                    "type": "string",
+                    "description": "How result files are published.",
+                    "default": "copy",
+                    "enum": [
+                        "symlink",
+                        "rellink",
+                        "link",
+                        "copy",
+                        "copyNoFollow",
+                        "move"
+                    ]
+                },
+                "seq_platform": {
+                    "type": "string",
+                    "description": "Sequencing platform written to the read group PL tag.",
+                    "default": "ILLUMINA"
+                }
+            }
+        },
+        "reference_options": {
+            "title": "Reference genome options",
+            "type": "object",
+            "required": [
+                "fasta"
+            ],
+            "properties": {
+                "fasta": {
+                    "type": "string",
+                    "description": "Reference genome FASTA (e.g. GRCh38 / Homo_sapiens_assembly38.fasta).",
+                    "format": "file-path"
+                },
+                "fasta_fai": {
+                    "type": "string",
+                    "description": "samtools faidx index of the FASTA. Built if not given.",
+                    "format": "file-path"
+                },
+                "dict": {
+                    "type": "string",
+                    "description": "Picard/GATK sequence dictionary (.dict). Built if not given.",
+                    "format": "file-path"
+                },
+                "bwa_index": {
+                    "type": "string",
+                    "description": "Directory with a pre-built BWA or BWA-MEM2 index (matching --aligner). Built if not given.",
+                    "format": "directory-path"
+                },
+                "aligner": {
+                    "type": "string",
+                    "description": "Read aligner.",
+                    "default": "bwa-mem2",
+                    "enum": [
+                        "bwa-mem2",
+                        "bwa"
+                    ]
+                },
+                "intervals": {
+                    "type": "string",
+                    "description": "BED file of target regions (exome/panel). Leave empty for whole-genome data.",
+                    "format": "file-path"
+                },
+                "interval_padding": {
+                    "type": "integer",
+                    "description": "Bases of padding added to each target interval.",
+                    "default": 0,
+                    "minimum": 0
+                },
+                "scatter_count": {
+                    "type": "integer",
+                    "description": "Number of interval chunks for parallel variant calling.",
+                    "default": 8,
+                    "minimum": 1
+                },
+                "dbsnp": {
+                    "type": "string",
+                    "description": "dbSNP VCF (bgzipped, with .tbi) used as BQSR known sites and to annotate germline calls.",
+                    "format": "file-path",
+                    "pattern": "^\\S+\\.vcf\\.gz$"
+                },
+                "known_indels": {
+                    "type": "string",
+                    "description": "Comma-separated list of known-indel VCFs (bgzipped, with .tbi) for BQSR, e.g. Mills and 1000G gold standard indels."
+                }
+            }
+        },
+        "germline_options": {
+            "title": "Germline calling options",
+            "type": "object",
+            "properties": {
+                "run_germline": {
+                    "type": "boolean",
+                    "description": "Run HaplotypeCaller joint genotyping on normal (status 0) samples.",
+                    "default": true
+                },
+                "joint_caller": {
+                    "type": "string",
+                    "description": "How per-sample GVCFs are combined before GenotypeGVCFs.",
+                    "default": "genomicsdb",
+                    "enum": [
+                        "genomicsdb",
+                        "combinegvcfs"
+                    ]
+                },
+                "germline_filter": {
+                    "type": "string",
+                    "description": "Filtering of the joint call set: GATK hard filters or VQSR (needs about 30 or more exomes, or WGS).",
+                    "default": "hard",
+                    "enum": [
+                        "hard",
+                        "vqsr"
+                    ]
+                },
+                "vqsr_hapmap": {
+                    "type": "string",
+                    "description": "HapMap 3.3 sites VCF (VQSR SNP truth/training).",
+                    "format": "file-path",
+                    "pattern": "^\\S+\\.vcf\\.gz$"
+                },
+                "vqsr_omni": {
+                    "type": "string",
+                    "description": "1000G Omni 2.5 sites VCF (VQSR SNP truth/training).",
+                    "format": "file-path",
+                    "pattern": "^\\S+\\.vcf\\.gz$"
+                },
+                "vqsr_1000g": {
+                    "type": "string",
+                    "description": "1000G phase 1 high-confidence SNPs VCF (VQSR SNP training).",
+                    "format": "file-path",
+                    "pattern": "^\\S+\\.vcf\\.gz$"
+                },
+                "vqsr_mills": {
+                    "type": "string",
+                    "description": "Mills and 1000G gold standard indels VCF (VQSR indel truth/training).",
+                    "format": "file-path",
+                    "pattern": "^\\S+\\.vcf\\.gz$"
+                },
+                "vqsr_axiom": {
+                    "type": "string",
+                    "description": "Optional Axiom Exome Plus polymorphic sites VCF (VQSR indel training).",
+                    "format": "file-path",
+                    "pattern": "^\\S+\\.vcf\\.gz$"
+                },
+                "vqsr_snp_filter_level": {
+                    "type": "number",
+                    "description": "Truth sensitivity level for ApplyVQSR in SNP mode.",
+                    "default": 99.7
+                },
+                "vqsr_indel_filter_level": {
+                    "type": "number",
+                    "description": "Truth sensitivity level for ApplyVQSR in INDEL mode.",
+                    "default": 99.0
+                },
+                "save_gvcf": {
+                    "type": "boolean",
+                    "description": "Gather and publish one GVCF per sample.",
+                    "default": false
+                }
+            }
+        },
+        "somatic_options": {
+            "title": "Somatic calling options",
+            "type": "object",
+            "properties": {
+                "run_somatic": {
+                    "type": "boolean",
+                    "description": "Run Mutect2 on tumour (status 1) samples, paired with the patient's normal when present.",
+                    "default": true
+                },
+                "germline_resource": {
+                    "type": "string",
+                    "description": "Population allele-frequency VCF for Mutect2 (e.g. af-only-gnomad.hg38.vcf.gz).",
+                    "format": "file-path",
+                    "pattern": "^\\S+\\.vcf\\.gz$"
+                },
+                "pon": {
+                    "type": "string",
+                    "description": "Panel of normals VCF for Mutect2 (e.g. 1000g_pon.hg38.vcf.gz).",
+                    "format": "file-path",
+                    "pattern": "^\\S+\\.vcf\\.gz$"
+                },
+                "contamination_variants": {
+                    "type": "string",
+                    "description": "Common biallelic SNPs for GetPileupSummaries (e.g. small_exac_common_3.hg38.vcf.gz). Contamination is not estimated when unset.",
+                    "format": "file-path",
+                    "pattern": "^\\S+\\.vcf\\.gz$"
+                }
+            }
+        },
+        "annotation_options": {
+            "title": "Annotation options",
+            "type": "object",
+            "properties": {
+                "run_vep": {
+                    "type": "boolean",
+                    "description": "Annotate PASS variants with Ensembl VEP (offline cache required).",
+                    "default": false
+                },
+                "vep_cache": {
+                    "type": "string",
+                    "description": "Directory containing the VEP cache.",
+                    "format": "directory-path"
+                },
+                "vep_species": {
+                    "type": "string",
+                    "description": "VEP species.",
+                    "default": "homo_sapiens"
+                },
+                "vep_genome": {
+                    "type": "string",
+                    "description": "VEP assembly name.",
+                    "default": "GRCh38"
+                },
+                "vep_cache_version": {
+                    "type": "integer",
+                    "description": "VEP cache version; must match the VEP container release.",
+                    "default": 114
+                }
+            }
+        },
+        "intermediate_files_options": {
+            "title": "Intermediate files",
+            "type": "object",
+            "properties": {
+                "save_reference": {
+                    "type": "boolean",
+                    "description": "Publish reference indexes built by the pipeline.",
+                    "default": false
+                },
+                "save_trimmed": {
+                    "type": "boolean",
+                    "description": "Publish fastp-trimmed FASTQ files.",
+                    "default": false
+                },
+                "save_aligned": {
+                    "type": "boolean",
+                    "description": "Publish lane-level sorted BAMs.",
+                    "default": false
+                },
+                "save_markdup": {
+                    "type": "boolean",
+                    "description": "Publish duplicate-marked BAMs (recalibrated BAMs are always published).",
+                    "default": false
+                },
+                "skip_multiqc": {
+                    "type": "boolean",
+                    "description": "Do not run MultiQC.",
+                    "default": false
+                }
+            }
+        },
+        "infrastructure_options": {
+            "title": "Infrastructure options",
+            "type": "object",
+            "properties": {
+                "awsqueue": {
+                    "type": "string",
+                    "description": "AWS Batch job queue (awsbatch profile)."
+                },
+                "awsregion": {
+                    "type": "string",
+                    "description": "AWS region (awsbatch profile).",
+                    "default": "eu-west-2"
+                },
+                "awscli": {
+                    "type": "string",
+                    "description": "Path to the AWS CLI on the Batch compute AMI (awsbatch profile), e.g. /home/ec2-user/miniconda/bin/aws. Leave empty when using Fusion/Wave."
+                },
+                "config_profile_name": {
+                    "type": "string",
+                    "description": "Name of the active config profile.",
+                    "hidden": true
+                },
+                "config_profile_description": {
+                    "type": "string",
+                    "description": "Description of the active config profile.",
+                    "hidden": true
+                }
+            }
+        }
+    },
+    "allOf": [
+        {
+            "$ref": "#/$defs/input_output_options"
+        },
+        {
+            "$ref": "#/$defs/reference_options"
+        },
+        {
+            "$ref": "#/$defs/germline_options"
+        },
+        {
+            "$ref": "#/$defs/somatic_options"
+        },
+        {
+            "$ref": "#/$defs/annotation_options"
+        },
+        {
+            "$ref": "#/$defs/intermediate_files_options"
+        },
+        {
+            "$ref": "#/$defs/infrastructure_options"
+        }
+    ]
+}

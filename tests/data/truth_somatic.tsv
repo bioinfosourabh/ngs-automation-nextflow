@@ -1,0 +1,15 @@
+chrom	pos	ref	alt	patient
+chrT1	2497	T	G	P1
+chrT1	9693	C	G	P1
+chrT1	15707	C	A	P1
+chrT1	15770	A	T	P1
+chrT1	21655	C	A	P1
+chrT1	23072	A	G	P1
+chrT2	646	T	G	P1
+chrT2	1072	A	G	P1
+chrT2	646	T	G	P3
+chrT2	1072	A	G	P3
+chrT2	5610	T	G	P3
+chrT2	7416	G	T	P3
+chrT2	7759	G	A	P3
+chrT2	8347	A	T	P3

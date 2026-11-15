@@ -1,0 +1,14 @@
+# Nextflow
+work/
+.nextflow/
+.nextflow.log*
+.nextflow.pid
+results/
+results_*/
+null/
+# Editors / OS
+.DS_Store
+*.swp
+.idea/
+.vscode/
+__pycache__/

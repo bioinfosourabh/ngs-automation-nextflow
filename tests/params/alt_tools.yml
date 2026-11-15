@@ -1,0 +1,4 @@
+# Alternative aligner and joint-calling route.
+aligner: bwa
+joint_caller: combinegvcfs
+save_gvcf: true

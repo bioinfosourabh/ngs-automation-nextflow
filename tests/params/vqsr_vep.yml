@@ -1,0 +1,10 @@
+# Stub-run check of the VQSR and VEP branches. The VCFs are stand-ins taken
+# from the synthetic test data; VQSR cannot train on a data set this small.
+germline_filter: vqsr
+vqsr_hapmap: tests/data/germline_resource.vcf.gz
+vqsr_omni: tests/data/common_variants.vcf.gz
+vqsr_1000g: tests/data/pon.vcf.gz
+vqsr_mills: tests/data/known_indels.vcf.gz
+run_vep: true
+vep_cache: tests/data
+run_somatic: false
